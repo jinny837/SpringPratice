@@ -1,0 +1,53 @@
+server:
+  port: 8080
+  servlet:
+    session:
+      cookie:
+        http-only: true
+
+spring:
+  application:
+    name: SpringPratice
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    name: root
+    username: root
+    password: jinny837
+    url: jdbc:postgresql://localhost:54321/mydatabase
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
+  quartz:
+    auto-startup: true
+    scheduler-name: QuartzScheduler
+    job-store-type: jdbc
+    jdbc:
+      schema: classpath:quartz.sql
+      initialize-schema: never
+    properties:
+      org:
+        quartz:
+          threadPool:
+            threadNamePrefix: QuartzScheduler
+            threadCount: 10
+            class: org.quartz.simpl.SimpleThreadPool
+          scheduler:
+            instanceId: AUTO
+            instance-name: quartzScheduler
+          jobStore:
+            useProperties: true
+            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+            dataSource: quartzDataSource
+            tablePrefix: QRTZ_
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: quartz
+  endpoint:
+    shutdown:
+      enabled: true
