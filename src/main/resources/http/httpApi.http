@@ -1,15 +1,16 @@
 @baseUrl = http://localhost:8080
+@authorization = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaW5ueSIsInJvbGVzIjpbIlJPTEVfUk9MRV9VU0VSIl0sImlhdCI6MTc0NTA2OTY4MSwiZXhwIjoxNzQ1MDczMjgxfQ.sXX95L-wC5TjkQZ_rZUvuJeVH8hpzbVGejeM6UOmuxg
 
 ### Create a new Quartz Job
 POST {{baseUrl}}/api/jobs
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaW5ueSIsInJvbGVzIjpbIlJPTEVfUk9MRV9VU0VSIl0sImlhdCI6MTc0NTA2Mjc2NywiZXhwIjoxNzQ1MDY2MzY3fQ.eRuE01NuVFmA6DvawWgQLmco2QVZbc6iuRbhmr46Ux8
+Authorization: Bearer {{authorization}}
 Content-Type: application/json
 
 {
-  "jobName": "helloJob",
+  "jobName": "CronJob",
   "jobGroup": "DEFAULT",
   "cronExpression": "0/30 * * * * ?",
-  "jobClass": "com.example.jobs.HelloJob",
+  "jobClass": "com.basic.springpratice.domain.schedul.job.CronJob",
   "jobData": {
     "param1": "value1",
     "param2": 123
@@ -17,13 +18,19 @@ Content-Type: application/json
 }
 
 ### Delete a Quartz Job
-DELETE {{baseUrl}}/api/jobs/DEFAULT/helloJob
+DELETE {{baseUrl}}/api/jobs/DEFAULT/CronJob
+Authorization: Bearer {{authorization}}
+Content-Type: application/json
 
 ### Pause a Quartz Job
-POST {{baseUrl}}/api/jobs/DEFAULT/helloJob/pause
+POST {{baseUrl}}/api/jobs/DEFAULT/CronJob/pause
+Authorization: Bearer {{authorization}}
+Content-Type: application/json
 
 ### Resume a Quartz Job
-POST {{baseUrl}}/api/jobs/DEFAULT/helloJob/resume
+POST {{baseUrl}}/api/jobs/DEFAULT/CronJob/resume
+Authorization: Bearer {{authorization}}
+Content-Type: application/json
 
 ### Retrieve registered job and trigger groups
 GET {{baseUrl}}/actuator/quartz

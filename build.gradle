@@ -93,6 +93,8 @@ tasks.withType(JavaCompile) {
 	options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
 }
 
+
+
 tasks.named('asciidoctor') {
 	inputs.dir snippetsDir
 	dependsOn test

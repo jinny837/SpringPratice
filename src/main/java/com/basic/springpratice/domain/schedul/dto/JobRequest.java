@@ -1,10 +1,12 @@
 package com.basic.springpratice.domain.schedul.dto;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.Map;
 
 @Data
+@ToString
 public class JobRequest {
     private String jobName;
     private String jobGroup = "DEFAULT";

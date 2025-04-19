@@ -52,7 +52,7 @@ spring:
             instanceId: AUTO
             instance-name: quartzScheduler
           jobStore:
-            useProperties: true
+            useProperties: false
             class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
             driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
             dataSource: quartzDataSource
@@ -71,5 +71,4 @@ management:
 security:
   jwt:
     secret: H4aP6ZTaKquQrqVZ9JT9mkFpJwX83xKBRMbbdDbIgr4= #"H4aP6ZTaKquQrqVZ9JT9mkFpJwX83xKBRMbbdDbIgr4="   # Base64("base64-encode-key-example")
-
     expire-length: 3600000

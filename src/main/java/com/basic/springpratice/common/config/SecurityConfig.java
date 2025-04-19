@@ -18,10 +18,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtValidators;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
@@ -161,7 +160,11 @@ public class SecurityConfig {
                 .build();
 
         // (선택) 추가 검증 규칙 설정
-        jwtDecoder.setJwtValidator(JwtValidators.createDefaultWithIssuer(""));
+        OAuth2TokenValidator<Jwt> withTimestamp = new JwtTimestampValidator();
+        jwtDecoder.setJwtValidator(withTimestamp);
+        //위 예제에서는 발행자 검증과 스코프 검증을 빼고, 토큰 유효기간 검증만 남겼습니다.
+        //실제 운영 환경에서는 반드시 발행자 검증을 포함하도록 설정하세요.
+        //jwtDecoder.setJwtValidator(JwtValidators.createDefaultWithIssuer(""));
         return jwtDecoder;
     }
 
