@@ -5,9 +5,25 @@ server:
       cookie:
         http-only: true
 
+
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret: H4aP6ZTaKquQrqVZ9JT9mkFpJwX83xKBRMbbdDbIgr4=
+          jws-algorithms: HS256
+          # ??? ????JWK URI
+          #jwk-set-uri: https://localhost:8080/ #https://auth.example.com/.well-known/jwks.json
+          # ??
+          # public-key-location: classpath:public.pem
   application:
     name: SpringPratice
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    generate-ddl: false
   datasource:
     driver-class-name: org.postgresql.Driver
     name: root
@@ -41,7 +57,7 @@ spring:
             driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
             dataSource: quartzDataSource
             tablePrefix: QRTZ_
-
+          #  isClustered: true
 management:
   endpoints:
     web:
@@ -51,3 +67,9 @@ management:
   endpoint:
     shutdown:
       enabled: true
+
+security:
+  jwt:
+    secret: H4aP6ZTaKquQrqVZ9JT9mkFpJwX83xKBRMbbdDbIgr4= #"H4aP6ZTaKquQrqVZ9JT9mkFpJwX83xKBRMbbdDbIgr4="   # Base64("base64-encode-key-example")
+
+    expire-length: 3600000

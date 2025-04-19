@@ -1,0 +1,47 @@
+@baseUrl = http://localhost:8080
+
+### Create a new Quartz Job
+POST {{baseUrl}}/api/jobs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaW5ueSIsInJvbGVzIjpbIlJPTEVfUk9MRV9VU0VSIl0sImlhdCI6MTc0NTA2Mjc2NywiZXhwIjoxNzQ1MDY2MzY3fQ.eRuE01NuVFmA6DvawWgQLmco2QVZbc6iuRbhmr46Ux8
+Content-Type: application/json
+
+{
+  "jobName": "helloJob",
+  "jobGroup": "DEFAULT",
+  "cronExpression": "0/30 * * * * ?",
+  "jobClass": "com.example.jobs.HelloJob",
+  "jobData": {
+    "param1": "value1",
+    "param2": 123
+  }
+}
+
+### Delete a Quartz Job
+DELETE {{baseUrl}}/api/jobs/DEFAULT/helloJob
+
+### Pause a Quartz Job
+POST {{baseUrl}}/api/jobs/DEFAULT/helloJob/pause
+
+### Resume a Quartz Job
+POST {{baseUrl}}/api/jobs/DEFAULT/helloJob/resume
+
+### Retrieve registered job and trigger groups
+GET {{baseUrl}}/actuator/quartz
+
+### Retrieve registered job names for all groups
+GET {{baseUrl}}/actuator/quartz/jobs
+
+### Retrieve registered trigger names for all groups
+GET {{baseUrl}}/actuator/quartz/triggers
+
+### Retrieve overview of a job group (e.g., 'samples')
+GET {{baseUrl}}/actuator/quartz/jobs/samples
+
+### Retrieve overview of a trigger group (e.g., 'DEFAULT')
+GET {{baseUrl}}/actuator/quartz/triggers/DEFAULT
+
+### Retrieve details of a job (e.g., 'jobOne' in 'samples')
+GET {{baseUrl}}/actuator/quartz/jobs/samples/jobOne
+
+### Retrieve details of a trigger (e.g., 'example' in 'samples')
+GET {{baseUrl}}/actuator/quartz/triggers/samples/example

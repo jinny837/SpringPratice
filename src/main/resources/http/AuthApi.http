@@ -1,0 +1,69 @@
+@baseUrl = http://localhost:8080
+
+### Obtain JWT Token
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "jinny",
+  "password": "password"
+}
+
+### Successful Response
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "type": "Bearer",
+  "expiresIn": 3600000
+}
+
+### Invalid Credentials
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "username": "wrongUser",
+  "password": "wrongPass"
+}
+
+### Unauthorized Response
+HTTP/1.1 401 Unauthorized
+
+### Register New User
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "jinny",
+  "password": "password"
+}
+
+### Successful Response (201 Created)
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "id": 1,
+  "username": "newuser",
+  "roles": ["ROLE_USER"],
+  "enabled": true
+}
+
+### Error: Username Already Exists
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "existinguser",
+  "password": "password123"
+}
+
+### Error Response (400 Bad Request)
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+  "error": "Username already exists: existinguser"
+}
